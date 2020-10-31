@@ -1,61 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-interface UserInfo {
-  createdAt: string;
-  dob: string;
-  email: string;
-  first_name: string;
-  guestRating: number;
-  hostRating: number;
-  id: number;
-  inviteCount: number;
-  last_name: string;
-  password: string;
-  profilePhoto: string;
-  pronouns: string;
-  swapCount: number;
-  updatedAt: string;
-}
-
-interface ListingInfo {
-  ada: boolean;
-  createdAt: string;
-  id: number;
-  internet: boolean;
-  listingAddress: string;
-  listingDescription: string;
-  listingTitle: string;
-  pets: boolean;
-  privateBath: boolean;
-  roommates: boolean;
-  smoking: boolean;
-  updatedAt: string;
-  user_id: number;
-}
 
 const Dashboard = () => {
   const userEmail = 'khellstorm@gmail.com';
-  const [userName, setUserName] = useState('');
-  const [userId, setUserId] = useState(0);
-  const [userListingId, setUserListingId] = useState(0);
-  const [randomListings, setRandomListings] = useState([]);
+  const userId = 1;
+  const listingId = 1;
+  const userName = 'Kyle';
+  const [randomListings, setRandomListings] = useState<any>([]);
+  const [shownListing, setShownListing] = useState<any>([]);
   const [swapCount, setSwapCount] = useState(0);
 
-  axios.get(`/user/email/${userEmail}`)
-    .then(({ data }) => {
-      const info: UserInfo = data;
-      setUserName(info.first_name);
-      setUserId(info.id);
+  useEffect(() => {
+    axios.get('/dashboardInfo', {
+      params: {
+        userId,
+        listingId,
+      },
     })
-    .then(() => {
-      axios.get(`/listing/user/${userId}`)
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(() => console.log('no listing found for that user'));
-    })
-    .catch((err) => console.error(err));
+      .then((data) => {
+        console.log('axios results back in');
+        console.log(data);
+      });
+  });
 
   useEffect(() => {
     axios.get(`/user/email/${userEmail}`)
@@ -81,9 +47,18 @@ const Dashboard = () => {
       Dashboard Page (Where the user arrives after logging in)
       <h4>
         Hello,
+        {' '}
         {userName}
       </h4>
-      <div className="user-notifications" />
+      <div id="user-notifications">
+        User notifications go here
+      </div>
+      <div id="random-listing">
+        Wanna get away?
+        {'There is a listing you might like from some <random_location>'}
+        {' '}
+        {'from <start_date> until <end_date>'}
+      </div>
     </>
   );
 };
