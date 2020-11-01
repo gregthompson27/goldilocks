@@ -35,7 +35,6 @@ const Dashboard = () => {
 
   return (
     <>
-      Dashboard Page (Where the user arrives after logging in)
       <h4>
         Hello,
         {' '}
