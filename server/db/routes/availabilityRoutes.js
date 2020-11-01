@@ -1,20 +1,6 @@
 const { Router } = require('express');
 const { Op } = require('sequelize');
-<<<<<<< HEAD
-const { default: availabilities } = require('../../test/sampleData/availabilities');
-
-const {
-  User,
-  Survey,
-  Request,
-  ListingPhotos,
-  Listing,
-  Invite,
-  Availability,
-} = require('../index');
-=======
 const { Availability } = require('../index');
->>>>>>> (cleanup) linting errors and console logs in routes
 
 const availabilityRouter = Router();
 
@@ -24,7 +10,7 @@ availabilityRouter
       .then((availabilities) => res.send(availabilities))
       .catch((err) => res.status(500).send(err));
   })
-  .get('/currentAvailabilites/:listingId', (req, res) => {
+  .get('/currentAvailabilities/:listingId', (req, res) => {
     const { listingId } = req.params;
     Availability.findAll({
       where: {
