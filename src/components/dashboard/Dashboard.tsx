@@ -23,25 +23,6 @@ const Dashboard = () => {
       });
   });
 
-  useEffect(() => {
-    axios.get(`/user/email/${userEmail}`)
-      .then(({ data }) => {
-        const info: UserInfo = data;
-        console.log(info, 'info');
-        setUserName(info.first_name);
-        setUserId(info.id);
-        return info.id;
-      })
-      .then((id) => {
-        axios.get(`/listing/user/${id}`)
-          .then(({ data }) => {
-            console.log(data, 'data');
-          })
-          .catch(() => console.log('no listing found for that user'));
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
   return (
     <>
       Dashboard Page (Where the user arrives after logging in)

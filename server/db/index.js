@@ -57,5 +57,13 @@ db.sync()
 // module.exports = models;
 
 module.exports = {
-  db, models, User
-}
+  db,
+  models,
+  User,
+  Survey,
+  Request,
+  ListingPhotos,
+  Listing,
+  Invite,
+  Availability,
+};
