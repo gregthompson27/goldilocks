@@ -9,19 +9,29 @@ const Dashboard = () => {
   const [randomListings, setRandomListings] = useState<any>([]);
   const [shownListing, setShownListing] = useState<any>([]);
   const [swapCount, setSwapCount] = useState(0);
+  const [pendingRequestCount, setPendingRequestCount] = useState(0);
 
-  useEffect(() => {
+  const getDashboardInfo = () => {
     axios.get('/dashboardInfo', {
       params: {
         userId,
         listingId,
       },
     })
-      .then((data) => {
-        console.log('axios results back in');
-        console.log(data);
+      .then((results) => {
+        const { data } = results;
+        setSwapCount(data.confirmedSwapCount);
+        setPendingRequestCount(data.pendingRequests.count);
+        setRandomListings(data.openAvailabilities);
+        console.log('swapCount:', swapCount);
+        console.log('request count:', pendingRequestCount);
+        console.log('random listings:', randomListings);
       });
-  });
+  };
+
+  useEffect(() => {
+    getDashboardInfo();
+  }, []);
 
   return (
     <>
@@ -35,7 +45,14 @@ const Dashboard = () => {
         User notifications go here
       </div>
       <div id="random-listing">
-        Wanna get away?
+        <p>Wanna get away?</p>
+        <p>
+          There are
+          {' '}
+          {randomListings.length}
+          {' '}
+          open places. Here is one of them:
+        </p>
         {'There is a listing you might like from some <random_location>'}
         {' '}
         {'from <start_date> until <end_date>'}
